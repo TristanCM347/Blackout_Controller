@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BlackoutController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BlackoutController</a> &gt; <a href="index.source.html" class="el_package">unsw.blackout</a> &gt; <span class="el_source">BlackoutController.java</span></div><h1>BlackoutController.java</h1><pre class="source lang-java linenums">package unsw.blackout;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import unsw.blackout.entity.Entity;
+import unsw.blackout.entity.device.DesktopDevice;
+import unsw.blackout.entity.device.Device;
+import unsw.blackout.entity.device.HandheldDevice;
+import unsw.blackout.entity.device.LaptopDevice;
+import unsw.blackout.entity.satellite.RelaySatellite;
+import unsw.blackout.entity.satellite.Satellite;
+import unsw.blackout.entity.satellite.StandardSatellite;
+import unsw.blackout.entity.satellite.TeleportingSatellite;
+import unsw.response.models.EntityInfoResponse;
+import unsw.utils.Angle;
+
+<span class="fc" id="L19">public class BlackoutController {</span>
+<span class="fc" id="L20">    private ArrayList&lt;Entity&gt; entities = new ArrayList&lt;&gt;();</span>
+
+    public void createDevice(String id, String deviceType, Angle position) {
+<span class="pc bpc" id="L23" title="1 of 4 branches missed.">        switch (deviceType) {</span>
+        case &quot;HandheldDevice&quot;:
+<span class="fc" id="L25">            entities.add(new HandheldDevice(id, position));</span>
+<span class="fc" id="L26">            break;</span>
+        case &quot;DesktopDevice&quot;:
+<span class="fc" id="L28">            entities.add(new DesktopDevice(id, position));</span>
+<span class="fc" id="L29">            break;</span>
+        case &quot;LaptopDevice&quot;:
+<span class="fc" id="L31">            entities.add(new LaptopDevice(id, position));</span>
+<span class="fc" id="L32">            break;</span>
+        default:
+            break;
+        }
+<span class="fc" id="L36">    }</span>
+
+    public void removeDevice(String id) {
+<span class="fc" id="L39">        entities.removeIf(entity -&gt; entity.getId().equals(id));</span>
+<span class="fc" id="L40">    }</span>
+
+    public void createSatellite(String id, String satelliteType, double height, Angle position) {
+<span class="pc bpc" id="L43" title="1 of 4 branches missed.">        switch (satelliteType) {</span>
+        case &quot;StandardSatellite&quot;:
+<span class="fc" id="L45">            entities.add(new StandardSatellite(id, height, position));</span>
+<span class="fc" id="L46">            break;</span>
+        case &quot;TeleportingSatellite&quot;:
+<span class="fc" id="L48">            entities.add(new TeleportingSatellite(id, height, position));</span>
+<span class="fc" id="L49">            break;</span>
+        case &quot;RelaySatellite&quot;:
+<span class="fc" id="L51">            entities.add(new RelaySatellite(id, height, position));</span>
+<span class="fc" id="L52">            break;</span>
+        default:
+            break;
+        }
+<span class="fc" id="L56">    }</span>
+
+    public void removeSatellite(String id) {
+<span class="fc" id="L59">       entities.removeIf(entity -&gt; entity.getId().equals(id));</span>
+<span class="fc" id="L60">    }</span>
+
+    public List&lt;String&gt; listDeviceIds() {
+<span class="fc" id="L63">        return entities.stream()</span>
+<span class="fc" id="L64">            .filter(entity -&gt; entity instanceof Device)</span>
+<span class="fc" id="L65">            .map(Entity::getId).collect(Collectors.toList());</span>
+    }
+
+    public List&lt;String&gt; listSatelliteIds() {
+<span class="fc" id="L69">        return entities.stream()</span>
+<span class="fc" id="L70">            .filter(entity -&gt; entity instanceof Satellite)</span>
+<span class="fc" id="L71">            .map(Entity::getId).collect(Collectors.toList());</span>
+    }
+
+    public void addFileToDevice(String id, String filename, String content) {
+<span class="fc" id="L75">        entities.stream()</span>
+<span class="fc" id="L76">            .filter(entity -&gt; entity.getId().equals(id))</span>
+<span class="fc" id="L77">            .forEach(entity -&gt; entity.createCompleteFile(filename, content));</span>
+<span class="fc" id="L78">    }</span>
+
+    public EntityInfoResponse getInfo(String id) {
+<span class="fc" id="L81">        return entities.stream()</span>
+<span class="fc" id="L82">            .filter(entity -&gt; entity.getId().equals(id))</span>
+<span class="fc" id="L83">            .map(Entity::entityInfoResponse)</span>
+<span class="fc" id="L84">            .findFirst().orElse(null);</span>
+    }
+
+    public void simulate(int numberOfMinutes) {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for (int i = 0; i &lt; numberOfMinutes; i++) {</span>
+<span class="fc" id="L89">            simulate();</span>
+        }
+<span class="fc" id="L91">    }</span>
+
+    public void simulate() {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (Entity entity : entities) {</span>
+<span class="fc" id="L95">            entity.moveSatellites();</span>
+<span class="fc" id="L96">        }</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (Entity entity: entities) {</span>
+<span class="fc" id="L98">            entity.removeOutOfRangeTransfers(entities);</span>
+<span class="fc" id="L99">        }</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (Entity entity : entities) {</span>
+<span class="fc" id="L101">            entity.transferDataFromThisEntity();</span>
+<span class="fc" id="L102">        }</span>
+<span class="fc" id="L103">    }</span>
+
+    public List&lt;String&gt; communicableEntitiesInRange(String id) {
+<span class="fc" id="L106">        List&lt;String&gt; communicableEntitiesInRange =  null;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (Entity entity : entities) {</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (entity.getId().equals(id)) {</span>
+<span class="fc" id="L109">                communicableEntitiesInRange = entity.findCommunicableEntitiesInRange(entities);</span>
+            }
+<span class="fc" id="L111">        }</span>
+<span class="fc" id="L112">        return communicableEntitiesInRange;</span>
+    }
+
+    public void sendFile(String fileName, String fromId, String toId) throws FileTransferException {
+<span class="fc" id="L116">        Entity sender = Entity.findEntity(entities, fromId);</span>
+<span class="fc" id="L117">        Entity reciever = Entity.findEntity(entities, toId);</span>
+
+<span class="fc" id="L119">        sender.checkFileExistsSender(fileName);</span>
+<span class="fc" id="L120">        sender.checkSpareSendingBandwidth(sender.getId());</span>
+<span class="fc" id="L121">        reciever.checkSpareReceivingBandwidth(reciever.getId());</span>
+<span class="fc" id="L122">        reciever.checkFileExistsReceiver(fileName);</span>
+<span class="fc" id="L123">        reciever.checkStorage(sender.getFilesAmountOfBytes(fileName));</span>
+<span class="fc" id="L124">        sender.createPartialFile(fileName, sender.getFilesContent(fileName), reciever, sender);</span>
+<span class="fc" id="L125">    }</span>
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    public void createDevice(String deviceId, String type, Angle position, boolean isMoving) {
+<span class="nc" id="L130">        createDevice(deviceId, type, position);</span>
+        // task 3
+<span class="nc" id="L132">    }</span>
+
+    public void createSlope(int startAngle, int endAngle, int gradient) {
+        // If you are not completing Task 3 you can leave this method blank :)
+<span class="nc" id="L136">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

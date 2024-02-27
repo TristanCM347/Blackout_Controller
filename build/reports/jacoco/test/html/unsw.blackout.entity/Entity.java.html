@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Entity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BlackoutController</a> &gt; <a href="index.source.html" class="el_package">unsw.blackout.entity</a> &gt; <span class="el_source">Entity.java</span></div><h1>Entity.java</h1><pre class="source lang-java linenums">package unsw.blackout.entity;
+
+import unsw.blackout.FileTransferException.VirtualFileAlreadyExistsException;
+import unsw.blackout.FileTransferException.VirtualFileNotFoundException;
+import unsw.blackout.entity.device.Device;
+import unsw.blackout.entity.satellite.RelaySatellite;
+import unsw.blackout.entity.satellite.Satellite;
+import unsw.blackout.file.File;
+import unsw.blackout.functionality.FileTransfer;
+import unsw.response.models.EntityInfoResponse;
+import unsw.response.models.FileInfoResponse;
+import unsw.utils.Angle;
+import unsw.utils.MathsHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.stream.Collectors;
+
+public abstract class Entity implements FileTransfer {
+    private String id;
+    private double height;
+    private Angle position;
+    private int range;
+<span class="fc" id="L27">    private ArrayList&lt;File&gt; files = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">    private ArrayList&lt;File&gt; fileTransferList = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L30">    public Entity(String id, double height, Angle position, int range) {</span>
+<span class="fc" id="L31">        this.id = id;</span>
+<span class="fc" id="L32">        this.height = height;</span>
+<span class="fc" id="L33">        this.position = position;</span>
+<span class="fc" id="L34">        this.range = range;</span>
+<span class="fc" id="L35">    }</span>
+
+    public String getId() {
+<span class="fc" id="L38">        return this.id;</span>
+    }
+
+    public void setId(String id) {
+<span class="nc" id="L42">        this.id = id;</span>
+<span class="nc" id="L43">    }</span>
+
+    public double getHeight() {
+<span class="fc" id="L46">        return this.height;</span>
+    }
+
+    public void setHeight(double height) {
+<span class="nc" id="L50">        this.height = height;</span>
+<span class="nc" id="L51">    }</span>
+
+    public Angle getPosition() {
+<span class="fc" id="L54">        return this.position;</span>
+    }
+
+    public void setPosition(Angle position) {
+<span class="fc" id="L58">        double degrees = position.toDegrees() % 360;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (degrees &lt; 0) {</span>
+<span class="fc" id="L60">            degrees += 360;</span>
+        }
+<span class="fc" id="L62">        Angle validPosition = Angle.fromDegrees(degrees);</span>
+<span class="fc" id="L63">        this.position = validPosition;</span>
+<span class="fc" id="L64">    }</span>
+
+    public int getRange() {
+<span class="fc" id="L67">        return this.range;</span>
+    }
+
+    public void setRange(int range) {
+<span class="nc" id="L71">        this.range = range;</span>
+<span class="nc" id="L72">    }</span>
+
+    public ArrayList&lt;File&gt; getFiles() {
+<span class="fc" id="L75">        return this.files;</span>
+    }
+
+    public void setFiles(ArrayList&lt;File&gt; files) {
+<span class="nc" id="L79">        this.files = files;</span>
+<span class="nc" id="L80">    }</span>
+
+    public ArrayList&lt;File&gt; getFileTransferList() {
+<span class="fc" id="L83">        return fileTransferList;</span>
+    }
+
+    public void setFileTransferList(ArrayList&lt;File&gt; fileTransferList) {
+<span class="nc" id="L87">        this.fileTransferList = fileTransferList;</span>
+<span class="nc" id="L88">    }</span>
+
+    public void addFileUploading(File file) {
+<span class="fc" id="L91">        fileTransferList.add(file);</span>
+<span class="fc" id="L92">    }</span>
+
+    public void addFile(File file) {
+<span class="fc" id="L95">        files.add(file);</span>
+<span class="fc" id="L96">    }</span>
+
+    public void removeFile(String fileName) {
+<span class="fc" id="L99">        files.removeIf(file -&gt; file.getFileName().equals(fileName));</span>
+<span class="fc" id="L100">    }</span>
+
+    public void removeFileUpload(String fileName) {
+<span class="fc" id="L103">        fileTransferList.removeIf(file -&gt; file.getFileName().equals(fileName));</span>
+<span class="fc" id="L104">    }</span>
+
+    public int getFilesAmountOfBytes(String fileName) {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        for (File file : files) {</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (file.getFileName().equals(fileName)) {</span>
+<span class="fc" id="L109">                return file.getFileSize();</span>
+            }
+<span class="fc" id="L111">        }</span>
+<span class="nc" id="L112">        return -1;</span>
+    }
+
+    public String getFilesContent(String fileName) {
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        for (File file : files) {</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">            if (file.getFileName().equals(fileName)) {</span>
+<span class="fc" id="L118">                return file.getContent();</span>
+            }
+<span class="fc" id="L120">        }</span>
+<span class="nc" id="L121">        return null;</span>
+    }
+
+    public void createCompleteFile(String filename, String content) {
+<span class="fc" id="L125">        File file = new File(filename, content, content, this);</span>
+<span class="fc" id="L126">        this.addFile(file);</span>
+<span class="fc" id="L127">    }</span>
+
+    public void createPartialFile(String fileName, String content, Entity reciever, Entity sender) {
+<span class="fc" id="L130">        File file = new File(fileName, &quot;&quot;, content, reciever, sender);</span>
+<span class="fc" id="L131">        this.addFileUploading(file);</span>
+<span class="fc" id="L132">        reciever.addFile(file);</span>
+<span class="fc" id="L133">    }</span>
+
+    public EntityInfoResponse entityInfoResponse() {
+<span class="fc" id="L136">        Map&lt;String, FileInfoResponse&gt; filesMap = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        for (File file : files) {</span>
+<span class="fc" id="L138">            filesMap.put(file.getFileName(), file.getFileInfoResponse());</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">        return new EntityInfoResponse(this.id, this.position, this.height, this.getClass().getSimpleName(), filesMap);</span>
+    }
+
+    public void moveSatellites() {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (this instanceof Satellite) {</span>
+<span class="fc" id="L145">            Satellite satellite = (Satellite) this;</span>
+<span class="fc" id="L146">            satellite.move();</span>
+        }
+<span class="fc" id="L148">    }</span>
+
+    @Override
+    public void removeOutOfRangeTransfers(ArrayList&lt;Entity&gt; entities) {
+<span class="fc" id="L152">        List&lt;String&gt; communicableEntitiesInRange = this.findCommunicableEntitiesInRange(entities);</span>
+<span class="fc" id="L153">        fileTransferList.removeIf(uploadingFile -&gt; {</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            if (!communicableEntitiesInRange.contains(uploadingFile.getOwnerEntityId())) {</span>
+<span class="fc" id="L155">                uploadingFile.removeFileFromOwnerEntity();</span>
+<span class="fc" id="L156">                return true;</span>
+            }
+<span class="fc" id="L158">            return false;</span>
+        });
+<span class="fc" id="L160">    }</span>
+
+    @Override
+    public void transferDataFromThisEntity() {
+<span class="fc" id="L164">        int sendingSpeed = this.getSendingSpeed();</span>
+<span class="fc" id="L165">        fileTransferList.removeIf(downloadingFile -&gt; {</span>
+<span class="fc" id="L166">            int receivingSpeed = downloadingFile.getOwnerEntitiesReceivingSpeed();</span>
+<span class="fc" id="L167">            int transferRate = Math.min(sendingSpeed, receivingSpeed);</span>
+<span class="fc" id="L168">            downloadingFile.addData(transferRate);</span>
+<span class="fc" id="L169">            return downloadingFile.isFileComplete();</span>
+        });
+<span class="fc" id="L171">    }</span>
+
+    @Override
+    public void checkFileExistsSender(String fileName) throws VirtualFileNotFoundException {
+<span class="fc" id="L175">        boolean fileExists = files.stream()</span>
+<span class="pc bpc" id="L176" title="1 of 4 branches missed.">            .anyMatch(file -&gt; file.getFileName().equals(fileName) &amp;&amp; file.isFileComplete());</span>
+
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (!fileExists) {</span>
+<span class="fc" id="L179">            throw new VirtualFileNotFoundException(fileName);</span>
+        }
+<span class="fc" id="L181">    }</span>
+
+    @Override
+    public void checkFileExistsReceiver(String fileName) throws VirtualFileAlreadyExistsException {
+<span class="fc" id="L185">        boolean fileExists = files.stream()</span>
+<span class="fc" id="L186">            .anyMatch(file -&gt; file.getFileName().equals(fileName));</span>
+
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (fileExists) {</span>
+<span class="fc" id="L189">            throw new VirtualFileAlreadyExistsException(fileName);</span>
+        }
+<span class="fc" id="L191">    }</span>
+
+    @Override
+    public int getAmountOfFiles() {
+<span class="fc" id="L195">        return this.files.size();</span>
+    }
+
+    @Override
+    public int getAmountFilesUploading() {
+<span class="fc" id="L200">        return fileTransferList.size();</span>
+    }
+
+    @Override
+    public int getAmountFilesDownloading() {
+<span class="fc" id="L205">        return (int) files.stream()</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">            .filter(file -&gt; !file.isFileComplete()).count();</span>
+    }
+
+    @Override
+    public int getUsedStorage() {
+<span class="fc" id="L211">        return files.stream()</span>
+<span class="fc" id="L212">            .mapToInt(File::getFileSize).sum();</span>
+    }
+
+    public ArrayList&lt;String&gt; findCommunicableEntitiesInRange(ArrayList&lt;Entity&gt; entities) {
+<span class="fc" id="L216">        ArrayList&lt;Entity&gt; communicableEntitiesInRange = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L217">        ArrayList&lt;Entity&gt; relaysVisited = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L218">        Stack&lt;Entity&gt; relayStack = new Stack&lt;&gt;();</span>
+<span class="fc" id="L219">        relayStack.push(this);</span>
+<span class="fc" id="L220">        relaysVisited.add(this);</span>
+
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        while (!relayStack.isEmpty()) {</span>
+<span class="fc" id="L223">            Entity node = relayStack.pop();</span>
+            // get neighbours and add to communicable enitities
+<span class="fc" id="L225">            ArrayList&lt;Entity&gt; neighbours = node.getEntitiesInRange(entities);</span>
+<span class="fc" id="L226">            communicableEntitiesInRange.addAll(</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">                neighbours.stream().filter(entity -&gt; !communicableEntitiesInRange.contains(entity))</span>
+<span class="fc" id="L228">                .collect(Collectors.toList())</span>
+            );
+
+            // add all neighbour relays to stack to repeat dfs search
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            for (Entity entity : neighbours) {</span>
+<span class="fc bfc" id="L233" title="All 4 branches covered.">                if (!relaysVisited.contains(entity) &amp;&amp; entity instanceof RelaySatellite) {</span>
+<span class="fc" id="L234">                    relayStack.push(entity);</span>
+<span class="fc" id="L235">                    relaysVisited.add(entity);</span>
+                }
+<span class="fc" id="L237">            }</span>
+<span class="fc" id="L238">        }</span>
+<span class="fc" id="L239">        ArrayList&lt;String&gt; validCommunicableEntitiesInRange = communicableEntitiesInRange.stream()</span>
+<span class="fc" id="L240">            .filter(this::isEntityCompatible)</span>
+<span class="fc" id="L241">            .map(Entity::getId).collect(Collectors.toCollection(ArrayList::new));</span>
+
+<span class="fc" id="L243">        return validCommunicableEntitiesInRange;</span>
+    }
+
+    private ArrayList&lt;Entity&gt; getEntitiesInRange(ArrayList&lt;Entity&gt; entities) {
+<span class="fc" id="L247">        ArrayList&lt;Entity&gt; entitiesInRange = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L248">        double range = this.getRange();</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        for (Entity entity : entities) {</span>
+<span class="fc bfc" id="L250" title="All 4 branches covered.">            if (this instanceof Satellite &amp;&amp; entity instanceof Satellite</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">            &amp;&amp; MathsHelper.isVisible(entity.getHeight(), entity.getPosition(), this.getHeight(), this.getPosition())</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">            &amp;&amp; MathsHelper.getDistance(this.getHeight(), this.getPosition(), entity.getHeight(), entity.getPosition())</span>
+            &lt;= range) {
+<span class="fc" id="L254">                entitiesInRange.add(entity);</span>
+<span class="fc bfc" id="L255" title="All 4 branches covered.">            } else if (this instanceof Device &amp;&amp; entity instanceof Satellite</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">            &amp;&amp; MathsHelper.isVisible(entity.getHeight(), entity.getPosition(), this.getPosition())</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">            &amp;&amp; MathsHelper.getDistance(entity.getHeight(), entity.getPosition(), this.getPosition())</span>
+            &lt;= range) {
+<span class="fc" id="L259">                entitiesInRange.add(entity);</span>
+<span class="fc bfc" id="L260" title="All 4 branches covered.">            } else if (this instanceof Satellite &amp;&amp; entity instanceof Device</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">            &amp;&amp; MathsHelper.isVisible(this.getHeight(), this.getPosition(), entity.getPosition())</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">            &amp;&amp; MathsHelper.getDistance(this.getHeight(), this.getPosition(), entity.getPosition())</span>
+            &lt;= range) {
+<span class="fc" id="L264">                entitiesInRange.add(entity);</span>
+            }
+<span class="fc" id="L266">        }</span>
+<span class="fc" id="L267">        return entitiesInRange;</span>
+    }
+
+    public boolean isEntityCompatible(Entity entity) {
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        return !this.equals(entity);</span>
+    }
+
+    public static Entity findEntity(ArrayList&lt;Entity&gt; entities, String id) {
+<span class="fc" id="L275">        return entities.stream()</span>
+<span class="fc" id="L276">            .filter(entity -&gt; entity.getId().equals(id)).findFirst().orElse(null);</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L282">            return true;</span>
+        }
+<span class="pc bpc" id="L284" title="1 of 4 branches missed.">        if (obj == null || getClass() != obj.getClass()) {</span>
+<span class="fc" id="L285">            return false;</span>
+        }
+<span class="fc" id="L287">        Entity otherEntity = (Entity) obj;</span>
+<span class="fc" id="L288">        return</span>
+<span class="fc" id="L289">            id.equals(otherEntity.id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

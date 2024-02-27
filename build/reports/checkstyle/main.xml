@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.37">
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/Environment.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/PlatformUtils.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/Scintilla.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/WebServer.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/App.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/BlackoutController.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/FileTransferException.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/Entity.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/DesktopDevice.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/Device.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/HandheldDevice.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/LaptopDevice.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/RelaySatellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/Satellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/StandardSatellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/TeleportingSatellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/file/File.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/functionality/FileTransfer.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/functionality/Movement.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/response/models/EntityInfoResponse.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/response/models/FileInfoResponse.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/utils/Angle.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/utils/MathsHelper.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/Environment.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/PlatformUtils.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/Scintilla.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/scintilla/WebServer.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/App.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/BlackoutController.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/FileTransferException.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/Entity.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/DesktopDevice.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/Device.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/HandheldDevice.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/device/LaptopDevice.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/RelaySatellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/Satellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/StandardSatellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/entity/satellite/TeleportingSatellite.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/file/File.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/functionality/FileTransfer.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/blackout/functionality/Movement.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/response/models/EntityInfoResponse.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/response/models/FileInfoResponse.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/utils/Angle.java">
+</file>
+<file name="/Users/tristanclinton-muehr/Desktop/THE GRIND/Projects/BlackoutController/src/main/java/unsw/utils/MathsHelper.java">
+</file>
+</checkstyle>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Angle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BlackoutController</a> &gt; <a href="index.source.html" class="el_package">unsw.utils</a> &gt; <span class="el_source">Angle.java</span></div><h1>Angle.java</h1><pre class="source lang-java linenums">package unsw.utils;
+
+import java.util.Objects;
+
+/**
+ * Represents a generic 'angle' that is either degrees or radians
+ * and allows comparison between them.
+ *
+ * You shouldn't modify this file.
+ *
+ * @author Braedon Wooding
+ */
+public final class Angle {
+    // Internally we store everything as radians.
+    private final double radians;
+
+    /**
+     * Default initialise the angle to 0.
+     */
+<span class="nc" id="L20">    public Angle() {</span>
+<span class="nc" id="L21">        radians = 0;</span>
+<span class="nc" id="L22">    }</span>
+
+<span class="fc" id="L24">    private Angle(double radians) {</span>
+<span class="fc" id="L25">        this.radians = radians;</span>
+<span class="fc" id="L26">    }</span>
+
+    /**
+     * Create an angle from radians.
+     */
+    public static Angle fromRadians(double radians) {
+<span class="fc" id="L32">        return new Angle(radians);</span>
+    }
+
+    /**
+     * Create an angle from degrees.
+     */
+    public static Angle fromDegrees(double degrees) {
+<span class="fc" id="L39">        return new Angle(Math.toRadians(degrees));</span>
+    }
+
+    /**
+     * Convert the angle to degrees.
+     */
+    public final double toDegrees() {
+<span class="fc" id="L46">        return Math.toDegrees(radians);</span>
+    }
+
+    /**
+     * Convert the angle to radians.
+     */
+    public final double toRadians() {
+<span class="fc" id="L53">        return radians;</span>
+    }
+
+    @Override
+    public final String toString() {
+        // All angles are shown to users as degrees
+<span class="nc" id="L59">        return Double.toString(toDegrees());</span>
+    }
+
+    /**
+     * Compare this angle to another angle.
+     * Returns...
+     * 1  if this is greater than other
+     * 0  if this is equal to other
+     * -1 if this is less than other
+     */
+    public int compareTo(Angle other) {
+<span class="fc" id="L70">        return Double.compare(this.radians, other.radians);</span>
+    }
+
+    /**
+     * Add another angle to this angle and return a new angle
+     * representing the result.
+     */
+    public Angle add(Angle other) {
+<span class="fc" id="L78">        return Angle.fromRadians(this.radians + other.radians);</span>
+    }
+
+    /**
+     * subtract another angle from this angle and return a new angle
+     * representing the result.
+     */
+    public Angle subtract(Angle other) {
+<span class="fc" id="L86">        return Angle.fromRadians(this.radians - other.radians);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L91">        return Objects.hash(radians);</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L97">            return true;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="nc" id="L99">            return false;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L101">            return false;</span>
+
+<span class="fc" id="L103">        Angle other = (Angle) obj;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        return radians == other.radians;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

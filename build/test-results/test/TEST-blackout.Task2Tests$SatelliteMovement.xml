@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="blackout.Task2Tests$SatelliteMovement" tests="4" skipped="0" failures="0" errors="0" timestamp="2024-02-27T12:38:26" hostname="Tristans-MacBook-Air.local" time="0.003">
+  <properties/>
+  <testcase name="testRelayMovementOutsideRange()" classname="blackout.Task2Tests$SatelliteMovement" time="0.001"/>
+  <testcase name="testStandardSatelliteMovement()" classname="blackout.Task2Tests$SatelliteMovement" time="0.0"/>
+  <testcase name="testTeleportingMovement()" classname="blackout.Task2Tests$SatelliteMovement" time="0.002"/>
+  <testcase name="testRelayMovementInRange()" classname="blackout.Task2Tests$SatelliteMovement" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
