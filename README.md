@@ -3,7 +3,7 @@ Simulates satellites communicating and functioning with each other and various d
 
 # Overview
 
-This project is a simulation of various entities orbiting around Jupiter, including devices like desktops, laptops, and handheld devices, as well as satellites like standard satellites, relay satellites, and teleporting satellites. The simulation models the movement, communication, and data storage capabilities of these entities in the harsh and complex environment of Jupiter's vicinity.
+This project is a simulation of various entities orbiting around Jupiter, including devices like desktops, laptops, and handheld devices, as well as satellites like standard satellites, relay satellites, and teleporting satellites. The simulation models the movement, communication, and data storage capabilities of these entities.
 
 ## Features
 
