@@ -1,6 +1,8 @@
 # BlackoutController
 Simulates satellites communicating and functioning with each other and various devices around Jupiter. Varieties of file transfers are available for different satellites and devices.
 
+- a desgin.pdf file is attached for a summary of the design of the project
+
 # Overview
 
 This project is a simulation of various entities orbiting around Jupiter, including devices like desktops, laptops, and handheld devices, as well as satellites like standard satellites, relay satellites, and teleporting satellites. The simulation models the movement, communication, and data storage capabilities of these entities.
