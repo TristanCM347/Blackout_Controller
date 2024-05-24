@@ -7,6 +7,24 @@ Simulates satellites communicating and functioning with each other and various d
 
 This project is a simulation of various entities orbiting around Jupiter, including devices like desktops, laptops, and handheld devices, as well as satellites like standard satellites, relay satellites, and teleporting satellites. The simulation models the movement, communication, and data storage capabilities of these entities.
 
+## Building the Project
+
+To build the project, follow these steps:
+
+1. Run the following command in the root directory to build the project:
+
+    ```sh
+    gradle build
+    ```
+    
+This command will compile the source code and package the application.
+
+## Running Tests
+
+1. Run the following command in the root directory to run the tests:
+    ```sh
+    gradle test
+    ```
 ## Features
 
 - **Diverse Entities**: Simulate different types of entities, including desktop devices, handheld devices, laptops, standard satellites, relay satellites, and teleporting satellites, each with unique properties and functionalities.
@@ -35,12 +53,6 @@ Entities can send and receive data, with each type having predefined bandwidth f
 ### Simulation Loop
 
 The core of the simulation is the loop that updates the positions of the satellites, checks for communication opportunities, and manages data transfers. This loop allows the simulation to dynamically evolve over time, representing the complex interactions between the entities orbiting Jupiter.
-
-
-
-
-
-
 
 
 ## Testing ##
